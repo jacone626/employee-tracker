@@ -23,7 +23,7 @@ const db = mysql.createConnection(
 
 
 const questions = function() {
-  inquirer.prompt([
+  inquirer.prompt(
     {
       type: 'list',
       message: 'What would you like to do?',
@@ -37,17 +37,47 @@ const questions = function() {
         'Add Department',
         'Quit'
       ]
+    })
+  .then((data) => {
+    switch(data.options) {
+      case "Add Employee":
+        addEmployee();
+        break;
+
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
+
+        case "View All Roles":
+          viewAllRoles();
+          break;
+
+        case "Add Role":
+          addRole();
+          break;
+
+        case "View All Departments":
+          viewAllDepartments();
+          break;
+
+        case "Add Department":
+          addDepartment();
+          break;
+
+        case "Quit":
+          quitDatabase();
+          break;
     }
-  ])
-}
+  })
+};
 
 questions();
 
 //Add Employee
-const addEmployee = x
+const addEmployee = 1
 
 //Update Employee Role
-const updateEmployeeRole = x
+const updateEmployeeRole = 1
 
 //View All Roles
 const viewAllRoles = db.query('SELECT * FROM roles', function (err, results) {
@@ -56,16 +86,16 @@ const viewAllRoles = db.query('SELECT * FROM roles', function (err, results) {
 });
 
 //Add Role
-const addRole = x
+const addRole = 1
 
 //View All Departments
-const viewAllDepartments = x
+const viewAllDepartments = 1
 
 //Add Department
-const addDepartment = x 
+const addDepartment = 1
 
 //Quit
-const quitDatabase = x
+const quitDatabase = 1
 
 
 app.use((req, res) => {
