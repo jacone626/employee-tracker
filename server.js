@@ -30,7 +30,7 @@ const questions = function() {
       name: "options",
       choices: [
         'Add Employee',
-        'Updated Employee Role',
+        'Update Employee Role',
         'View All Roles',
         'Add Role',
         'View All Departments',
@@ -43,7 +43,29 @@ const questions = function() {
 
 questions();
 
+//Add Employee
+const addEmployee = x
 
+//Update Employee Role
+const updateEmployeeRole = x
+
+//View All Roles
+const viewAllRoles = db.query('SELECT * FROM roles', function (err, results) {
+  console.log(results);
+  viewAllRoles();
+});
+
+//Add Role
+const addRole = x
+
+//View All Departments
+const viewAllDepartments = x
+
+//Add Department
+const addDepartment = x 
+
+//Quit
+const quitDatabase = x
 
 
 app.use((req, res) => {
