@@ -22,6 +22,28 @@ const db = mysql.createConnection(
 );
 
 
+const questions = function() {
+  inquirer.prompt([
+    {
+      type: 'list',
+      message: 'What would you like to do?',
+      name: "options",
+      choices: [
+        'Add Employee',
+        'Updated Employee Role',
+        'View All Roles',
+        'Add Role',
+        'View All Departments',
+        'Add Department',
+        'Quit'
+      ]
+    }
+  ])
+}
+
+questions();
+
+
 
 
 app.use((req, res) => {

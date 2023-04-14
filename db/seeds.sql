@@ -11,7 +11,7 @@ VALUES ("Sales Lead", 150000, 1),
        ("Junior Engineer", 120000, 2),
        ("Finance Manager", 140000, 3),
        ("Finance Analyst", 80000, 3),
-       ("Lawyer", 200000, 4);
+       ("Lawyer", 200000, 4),
        ("Paralegal", 90000, 4);
 
 
@@ -22,5 +22,5 @@ VALUES ("John", "Davis", 1, null),
        ("Dave", "Woods", 4, 3),
        ("Austin", "Smith", 5, null),
        ("Mark", "Andrews", 6, 5),
-       ("Lisa", "Paul" 7, null);
+       ("Lisa", "Paul", 7, null),
        ("Paula", "Conway", 8, 7);
