@@ -137,7 +137,12 @@ const updateEmployeeRole = 1
 
 //View All Roles
 function viewAllRoles() {
-  db.query('SELECT * FROM roles', function (err, results) {
+  const query = 
+  `SELECT roles.id, roles.title, department.department_name, roles.salary
+  FROM roles
+  JOIN department ON roles.department_id = department.id;`;
+
+  db.query(query, function (err, results) {
     if (err) {
       console.log(err);
     }
@@ -161,7 +166,24 @@ function viewAllDepartments () {
 )};
 
 //Add Department
-const addDepartment = 1
+function addDepartment () {
+  inquirer.prompt(
+    {
+      type: 'input',
+      message: "What is the name of the department?",
+      name: "departmentName",
+    })
+    .then((data) => {
+    db.query(`INSERT INTO department (department_name) VALUES ("${data.departmentName}")`, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+      console.log(`Added ${data.departmentName} to the database.`);
+      questions();
+    })
+  })
+};
+
 
 //Quit
 function quitDatabase() {
