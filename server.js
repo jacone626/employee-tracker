@@ -22,13 +22,14 @@ const db = mysql.createConnection(
 );
 
 
-const questions = function() {
+function questions () {
   inquirer.prompt(
     {
       type: 'list',
       message: 'What would you like to do?',
       name: "options",
       choices: [
+        'View All Employees',
         'Add Employee',
         'Update Employee Role',
         'View All Roles',
@@ -40,9 +41,13 @@ const questions = function() {
     })
   .then((data) => {
     switch(data.options) {
-      case "Add Employee":
-        addEmployee();
-        break;
+        case "View All Employees":
+          viewAllEmployees();
+          break;
+      
+        case "Add Employee":
+          addEmployee();
+          break;
 
         case "Update Employee Role":
           updateEmployeeRole();
@@ -73,6 +78,14 @@ const questions = function() {
 
 questions();
 
+//View All Employees
+
+function viewAllEmployees () {
+  db.query('SELECT * FROM employee', function (err, results) {
+    console.table(results);
+    questions();
+  }
+)};
 //Add Employee
 const addEmployee = 1
 
@@ -80,10 +93,12 @@ const addEmployee = 1
 const updateEmployeeRole = 1
 
 //View All Roles
-const viewAllRoles = db.query('SELECT * FROM roles', function (err, results) {
-  console.log(results);
-  viewAllRoles();
-});
+function viewAllRoles() {
+  db.query('SELECT * FROM roles', function (err, results) {
+    console.table(results);
+    questions();
+  }
+)};
 
 //Add Role
 const addRole = 1
