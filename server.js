@@ -79,15 +79,58 @@ function questions () {
 questions();
 
 //View All Employees
-
 function viewAllEmployees () {
-  db.query('SELECT * FROM employee', function (err, results) {
+  const query = 
+`SELECT employee.first_name, employee.last_name, roles.title, department.department_name, roles.salary, CONCAT (m.first_name, " ", m.last_name) AS manager
+FROM employee
+JOIN roles ON employee.role_id = roles.id
+JOIN department ON roles.department_id = department.id
+LEFT JOIN employee m ON employee.manager_id = m.id;`;
+
+  db.query(query, function (err, results) {
+    if (err) {
+      console.log(err);
+    }
     console.table(results);
     questions();
   }
 )};
+
 //Add Employee
-const addEmployee = 1
+function addEmployee () {
+  inquirer.prompt(
+    {
+      type: 'input',
+      message: "What is the employee's first name?",
+      name: "firstName",
+    },
+    {
+      type: 'input',
+      message: "What is the employee's last name?",
+      name: "lastName",
+    },
+    {
+      type: 'list',
+      message: "What is the employee's role?",
+      name: "role",
+      choices: 'x'
+    },
+    {
+      type: 'list',
+      message: "Who is the employee's manager",
+      name: "manager",
+      choices: "x"
+    },
+  )
+
+  db.query('Add Employee', function (err, results) {
+    if (err) {
+      console.log(err);
+    }
+    console.table(results);
+    questions();
+  }
+)};
 
 //Update Employee Role
 const updateEmployeeRole = 1
@@ -95,6 +138,9 @@ const updateEmployeeRole = 1
 //View All Roles
 function viewAllRoles() {
   db.query('SELECT * FROM roles', function (err, results) {
+    if (err) {
+      console.log(err);
+    }
     console.table(results);
     questions();
   }
@@ -104,13 +150,23 @@ function viewAllRoles() {
 const addRole = 1
 
 //View All Departments
-const viewAllDepartments = 1
+function viewAllDepartments () {
+  db.query('SELECT * FROM department', function (err, results) {
+    if (err) {
+      console.log(err);
+    }
+    console.table(results);
+    questions();
+  }
+)};
 
 //Add Department
 const addDepartment = 1
 
 //Quit
-const quitDatabase = 1
+function quitDatabase() {
+  db.end()
+}
 
 
 app.use((req, res) => {
