@@ -98,7 +98,7 @@ LEFT JOIN employee m ON employee.manager_id = m.id;`;
 
 //Add Employee
 function addEmployee () {
-  inquirer.prompt(
+  inquirer.prompt([
     {
       type: 'input',
       message: "What is the employee's first name?",
@@ -121,7 +121,9 @@ function addEmployee () {
       name: "manager",
       choices: "x"
     },
+  ]
   )
+.then((data) =>
 
   db.query('Add Employee', function (err, results) {
     if (err) {
@@ -129,11 +131,42 @@ function addEmployee () {
     }
     console.table(results);
     questions();
-  }
-)};
+  })
+)}
 
 //Update Employee Role
-const updateEmployeeRole = 1
+function updateEmployeeRole() {
+  db.query(`SELECT employee.id, employee.first_name, employee.last_name, roles.title FROM employee JOIN roles ON employee.role_id = roles.id`, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+  inquirer.prompt([
+    {
+      type: 'list',
+      message: "Which employee's role do you want to update?",
+      name: "employee",
+      choices: results.map((employee) => `${employee.first_name} ${employee.last_name}`)
+    },
+    {
+      type: 'list',
+      message: "Which role do you want to assign the selected employee?",
+      name: "role",
+      choices: results.map((roles) => `${roles.title}`)
+    },
+  ])
+    // .then((data) => {
+    // const params = [data.roleName, data.roleSalary, data.roleDepartment]
+
+    // db.query(`INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`, params, function (err, results) {
+    // if (err) {
+    //   console.log(err);
+    //   }
+    //   console.log(`Updated employee's role.`);
+    //   questions();
+    // })
+  // })
+})
+};
 
 //View All Roles
 function viewAllRoles() {
@@ -152,7 +185,45 @@ function viewAllRoles() {
 )};
 
 //Add Role
-const addRole = 1
+
+function addRole() {
+  db.query(`Select * FROM department`, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: "What is the name of the role?",
+      name: "roleName",
+    },
+    {
+      type: 'input',
+      message: "What is the salary of the role?",
+      name: "roleSalary",
+    },
+    {
+      type: 'list',
+      message: "Which department does the role belong to?",
+      name: "roleDepartment",
+      choices: results.map((department) => department.department_name
+      )
+    },
+  ])
+    .then((data) => {
+    const params = [data.roleName, data.roleSalary, data.roleDepartment]
+
+    db.query(`INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`, params, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+      console.log(`Added ${data.roleName} to the database.`);
+      questions();
+    })
+  })
+})
+};
+
 
 //View All Departments
 function viewAllDepartments () {
