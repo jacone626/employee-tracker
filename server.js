@@ -98,6 +98,12 @@ LEFT JOIN employee m ON employee.manager_id = m.id;`;
 
 //Add Employee
 function addEmployee () {
+
+  db.query(`SELECT employee.id, employee.first_name, employee.last_name, roles.title FROM employee JOIN roles ON employee.role_id = roles.id`, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+
   inquirer.prompt([
     {
       type: 'input',
@@ -113,26 +119,27 @@ function addEmployee () {
       type: 'list',
       message: "What is the employee's role?",
       name: "role",
-      choices: 'x'
+      choices: results.map((roles) => roles.title)
     },
     {
       type: 'list',
       message: "Who is the employee's manager",
       name: "manager",
-      choices: "x"
+      choices: results.map((employee) => `${employee.first_name} ${employee.last_name}`)
     },
-  ]
-  )
-.then((data) =>
+  ])
+  // .then((data) =>
 
-  db.query('Add Employee', function (err, results) {
-    if (err) {
-      console.log(err);
-    }
-    console.table(results);
-    questions();
-  })
-)}
+//   db.query('Add Employee', function (err, results) {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.table(results);
+//     questions();
+//   })
+})
+}
+
 
 //Update Employee Role
 function updateEmployeeRole() {
@@ -154,17 +161,17 @@ function updateEmployeeRole() {
       choices: results.map((roles) => `${roles.title}`)
     },
   ])
-    // .then((data) => {
-    // const params = [data.roleName, data.roleSalary, data.roleDepartment]
+    .then((data) => {
+    const params = [data.role, data.employee]
 
-    // db.query(`INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`, params, function (err, results) {
-    // if (err) {
-    //   console.log(err);
-    //   }
-    //   console.log(`Updated employee's role.`);
-    //   questions();
-    // })
-  // })
+    db.query(`UPDATE employee SET role_id = ? WHERE id = ?`, params, function (err, results) {
+    if (err) {
+      console.log(err);
+      }
+      console.log(`Updated employee's role.`);
+      questions();
+    })
+  })
 })
 };
 
