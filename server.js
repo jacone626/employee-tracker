@@ -4,7 +4,6 @@ const mysql = require('mysql2');
 const inquirer = require("inquirer");
 const console = require("console")
 
-const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Express middleware
@@ -19,7 +18,7 @@ const db = mysql.createConnection(
     password: '12345678',
     database: 'employee_db'
   },
-  console.log(`Connected to the employee_db database.`)
+  console.log(`\n----- Employee Manager -----\n`)
 );
 
 //Starter function
@@ -298,12 +297,4 @@ function quitDatabase() {
   db.end()
 }
 
-
-app.use((req, res) => {
-    res.status(404).end();
-  });
-  
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
   
