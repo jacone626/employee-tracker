@@ -99,7 +99,7 @@ LEFT JOIN employee m ON employee.manager_id = m.id;`;
 //Add Employee
 function addEmployee () {
 
-  db.query(`SELECT employee.id, employee.first_name, employee.last_name, roles.title FROM employee JOIN roles ON employee.role_id = roles.id`, function (err, results) {
+  db.query(`SELECT id, title FROM roles`, function (err, results) {
     if (err) {
       console.log(err);
       }
