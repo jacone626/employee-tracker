@@ -23,7 +23,7 @@ To quit the application, simply scroll down to the Quit option and click on that
 
 Walkthrough video:
 
-
+[Untitled_ Apr 18, 2023 11_03 AM.webm](https://user-images.githubusercontent.com/121627491/232820160-f06d078a-ede3-4139-90c9-089252bf5bff.webm)
 
 ## Credits
 https://www.w3schools.com/jsref/jsref_map.asphttps://www.w3schools.com/jsref/jsref_map.asp
